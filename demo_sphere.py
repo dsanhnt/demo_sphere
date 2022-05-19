@@ -51,11 +51,8 @@ def get_sphere(texture_path, radius, translate,axial_tilt=0):
         mesh.attach(texture_filter)
     else :
         wireframe_filter = WireframeFilter()
-        #shading_filter = ShadingFilter()
         mesh.attach(wireframe_filter)
-        #mesh.attach(shading_filter)
     
-    #mesh.transform.rotate(axial_tilt, (1,0,0))
     return mesh
 
 def RotationMatrix(axis,theta):
@@ -80,16 +77,12 @@ def get_texcoords(vertices,axial_tilt=0):
 
         u = 0.5 + np.arctan2(-vert[0], vert[1]) / (2 * np.pi)
         v = 0.5 + np.arcsin(vert[2] / radius) / np.pi
-        # avoiding duplicate values
-        #if [u,v] not in texcoords:
-        print(v,v)
         texcoords.append([u,v])
-        #else:
-        #    pass
-
-    # remove duplicates to avoid conflict
     return np.array(texcoords)
 #------------------------------------------------
+
+# Visualizer
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--shading', default='smooth', 
                             choices=['none','flat','smooth'],
@@ -107,7 +100,6 @@ view.camera.set_range((-1, 1), (-1, 1), (-1, 1))
 
 Sun_texture_path    = load_data_file('2k_Earth.jpg',directory = './texture/')
 Sphere_Sun          = get_sphere(Sun_texture_path, 1.0, translate = (0,0,0))
-
 
 
 canvas.show()
